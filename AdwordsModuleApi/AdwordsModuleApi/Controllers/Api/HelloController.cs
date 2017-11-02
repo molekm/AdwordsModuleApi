@@ -21,9 +21,9 @@ namespace AdwordsModuleApi.Controllers.Api
                 age = 35
             };
 
-            var json = new JavaScriptSerializer().Serialize(person);
+            //var json = new JavaScriptSerializer().Serialize(person);
 
-            return Ok(json);
+            return Ok(person);
         }
     }
 
