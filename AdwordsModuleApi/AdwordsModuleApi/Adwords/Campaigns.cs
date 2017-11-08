@@ -114,7 +114,7 @@ namespace AdwordsModuleApi.Adwords
                         {
                             foreach (Campaign campaign in page.entries)
                             {
-                                if(campaign.status == CampaignStatus.ENABLED)
+                                if(campaign.status != CampaignStatus.ENABLED)
                                     campaigns.Add(campaign);
                             }
                         }
