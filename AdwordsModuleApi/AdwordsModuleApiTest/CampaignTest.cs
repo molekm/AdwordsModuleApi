@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AdwordsModuleApi.Adwords.Test;
+using AdwordsModuleApi.Adwords;
 using AdwordsModuleApi.Models;
 using Google.Api.Ads.AdWords.Lib;
 using Google.Api.Ads.AdWords.v201710;
@@ -61,9 +62,24 @@ namespace AdwordsModuleApiTest
             // Act
             Budget budget = TestCampaigns.CreateBudgetTest(new AdWordsUser(), campaignDto);
 
+            // Assert
             Assert.AreEqual(50, budget.amount.microAmount);
             Assert.AreEqual(false, budget.isExplicitlyShared);
             Assert.AreEqual(0, (int)budget.deliveryMethod);
+        }
+
+        [TestMethod]
+        public void GetCampaignsTest()
+        {
+            // Arrange
+            List<Campaign> campaigns = Campaigns.GetCampaigns(new AdWordsUser());
+
+            // Act
+            Campaign[] camp = campaigns.Where(campa => campa.name == "Interplanetary Cruise #1").ToArray();
+
+            // Assert
+            Assert.AreNotEqual(0, campaigns.Count);
+            Assert.AreEqual(969950091, camp[0].id);
         }
     }
 }
