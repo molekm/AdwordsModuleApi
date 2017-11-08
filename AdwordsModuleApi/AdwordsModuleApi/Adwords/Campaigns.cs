@@ -16,7 +16,7 @@ namespace AdwordsModuleApi.Adwords
             using (CampaignService campaignService =
                 (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
             {
-                Budget budget = Adwords.Budgets.CreateBudget(user, campaignDto);
+                Budget budget = Budgets.CreateBudget(user, campaignDto);
 
                 List<CampaignOperation> operations = new List<CampaignOperation>();
 
