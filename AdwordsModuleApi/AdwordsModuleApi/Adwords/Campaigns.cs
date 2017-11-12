@@ -53,9 +53,11 @@ namespace AdwordsModuleApi.Adwords
                     campaign.settings = new Setting[] { geoSetting };
 
                     // Optional: Set the start date.
+                    campaignDto.StartDate = campaignDto.StartDate.AddHours(12);
                     campaign.startDate = campaignDto.StartDate.ToString("yyyyMMdd");
 
                     // Optional: Set the end date.
+                    campaignDto.EndDate = campaignDto.EndDate.AddHours(12);
                     campaign.endDate = campaignDto.EndDate.ToString("yyyyMMdd");
 
                     // Optional: Set the frequency cap.
