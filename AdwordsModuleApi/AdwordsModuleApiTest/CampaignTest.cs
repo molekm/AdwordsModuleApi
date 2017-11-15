@@ -24,7 +24,7 @@ namespace AdwordsModuleApiTest
                 Name = "Test Campaign",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
-                BudgetDto = new BudgetDto
+                Budget = new BudgetDto
                 {
                     Name = "Test Budget",
                     MicroAmount = 50
@@ -52,7 +52,7 @@ namespace AdwordsModuleApiTest
                 Name = "Test Campaign",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
-                BudgetDto = new BudgetDto
+                Budget = new BudgetDto
                 {
                     Name = "Test Budget",
                     MicroAmount = 50

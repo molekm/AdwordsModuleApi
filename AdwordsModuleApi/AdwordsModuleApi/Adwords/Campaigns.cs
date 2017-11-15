@@ -11,11 +11,13 @@ namespace AdwordsModuleApi.Adwords
     public static class Campaigns
     {
 
-        public static void CreateCampaign(AdWordsUser user, CampaignDto campaignDto)
+        public static CampaignReturnValue CreateCampaign(AdWordsUser user, CampaignDto campaignDto)
         {
             using (CampaignService campaignService =
                 (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
             {
+                CampaignReturnValue camp = new CampaignReturnValue();
+
                 Budget budget = Budgets.CreateBudget(user, campaignDto);
 
                 List<CampaignOperation> operations = new List<CampaignOperation>();
@@ -78,12 +80,13 @@ namespace AdwordsModuleApi.Adwords
                 try
                 {
                     // Add the campaign.
-                    campaignService.mutate(operations.ToArray());                   
+                    camp = campaignService.mutate(operations.ToArray());                   
                 }
                 catch (Exception e)
                 {
                     throw new System.ApplicationException("Failed to add campaigns.", e);
                 }
+                return camp;
             }
         }
 

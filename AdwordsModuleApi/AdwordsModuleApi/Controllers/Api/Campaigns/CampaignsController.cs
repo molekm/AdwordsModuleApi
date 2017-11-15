@@ -17,10 +17,10 @@ namespace AdwordsModuleApi.Controllers.Api.Campaigns
     {
         [HttpPost]
         public IHttpActionResult CreateCampaign([FromBody]CampaignDto campaignDto)
-        {           
-            Adwords.Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
+        {
+            CampaignReturnValue camp = Adwords.Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
 
-            return Ok(campaignDto);
+            return Ok(camp);
         }
 
         [HttpGet]

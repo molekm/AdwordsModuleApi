@@ -9,11 +9,11 @@ namespace AdwordsModuleApi.Models
     {
         public CampaignDto()
         {
-            BudgetDto = new BudgetDto();
+            Budget = new BudgetDto();
         }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public BudgetDto BudgetDto { get; set; }
+        public BudgetDto Budget { get; set; }
     }
 }

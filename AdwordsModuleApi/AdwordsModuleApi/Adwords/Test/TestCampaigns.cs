@@ -75,10 +75,10 @@ namespace AdwordsModuleApi.Adwords.Test
                 // Create the campaign budget.
                 Budget budget = new Budget();
                 budget.isExplicitlyShared = false;
-                budget.name = campaignDto.BudgetDto.Name;
+                budget.name = campaignDto.Budget.Name;
                 budget.deliveryMethod = BudgetBudgetDeliveryMethod.STANDARD;
                 budget.amount = new Money();
-                budget.amount.microAmount = campaignDto.BudgetDto.MicroAmount;
+                budget.amount.microAmount = campaignDto.Budget.MicroAmount;
 
                 return budget;
             }
