@@ -75,7 +75,6 @@ namespace AdwordsModuleApi.Adwords
                     operation.operand = campaign;
 
                     operations.Add(operation);
-                
 
                 try
                 {
