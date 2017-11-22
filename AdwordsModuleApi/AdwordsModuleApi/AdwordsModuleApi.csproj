@@ -171,13 +171,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adwords\AddAdGroup.cs" />
     <Compile Include="Adwords\Budgets.cs" />
     <Compile Include="Adwords\Campaigns.cs" />
-    <Compile Include="Adwords\Test\TestCampaigns.cs" />
+    <Compile Include="Adwords\ExpandedTextAds.cs" />
+    <Compile Include="Adwords\Keyword.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\Ads\AdsController.cs" />
     <Compile Include="Controllers\Api\Campaigns\CampaignsController.cs" />
     <Compile Include="Controllers\Api\Products\ProductsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -194,10 +197,11 @@
       <DependentUpon>201711161754529_CorrectionOnLogicName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ActivateCampaign.cs" />
     <Compile Include="Models\BudgetDto.cs" />
     <Compile Include="Models\CampaignDto.cs" />
+    <Compile Include="Models\ExpandedTextAdDto.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Secrets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

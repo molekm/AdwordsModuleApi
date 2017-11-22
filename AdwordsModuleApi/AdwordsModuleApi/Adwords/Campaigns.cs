@@ -130,5 +130,52 @@ namespace AdwordsModuleApi.Adwords
                 return campaigns;
             }
         }
+
+        public static void ActivateCampaign(ActivateCampaign campaign)
+        {
+            AdWordsUser adWordsUser = new AdWordsUser();
+            AdGroupReturnValue adGroup;
+
+            ExpandedTextAdDto[] expandedTextAds = campaign.ExpandedTextAd.ToArray();
+
+            for (int i = 0; i < expandedTextAds.Length; i++)
+            {
+                adGroup = AddAdGroup.CreateAdGroup(adWordsUser, campaign.CampaignId, expandedTextAds[i]);
+                AdGroupAdReturnValue textAd = ExpandedTextAds.CreateTextAdd(adWordsUser, adGroup.value[0].id, expandedTextAds[i]);
+            }
+
+            SetCampaignStatus(adWordsUser, campaign.CampaignId, CampaignStatus.ENABLED);
+
+        }
+
+        private static void SetCampaignStatus(AdWordsUser user, long campaignId, CampaignStatus campaignStatus)
+        {
+            using (CampaignService campaignService =
+                (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
+            {
+
+                // Create the campaign.
+                Campaign campaign = new Campaign();
+                campaign.id = campaignId;
+                campaign.status = campaignStatus;
+
+                // Create the operation.
+                CampaignOperation operation = new CampaignOperation();
+                operation.@operator = Operator.SET;
+                operation.operand = campaign;
+
+                try
+                {
+                    // Update the campaign.
+                    CampaignReturnValue retVal = campaignService.mutate(
+                        new CampaignOperation[] { operation });
+
+                }
+                catch (Exception e)
+                {
+                    throw new System.ApplicationException("Failed to update campaign.", e);
+                }
+            }
+        }
     }
 }

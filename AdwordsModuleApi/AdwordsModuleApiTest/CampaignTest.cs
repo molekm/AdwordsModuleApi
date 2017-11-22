@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AdwordsModuleApi.Adwords.Test;
 using AdwordsModuleApi.Adwords;
 using AdwordsModuleApi.Models;
 using Google.Api.Ads.AdWords.Lib;
@@ -21,25 +20,25 @@ namespace AdwordsModuleApiTest
             // Arrange
             CampaignDto campaignDto = new CampaignDto
             {
-                Name = "Test Campaign",
+                Name = DateTime.Now.ToString(),
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
                 Budget = new BudgetDto
                 {
-                    Name = "Test Budget",
-                    MicroAmount = 50
+                    Name = DateTime.Now.ToString(),
+                    MicroAmount = 5000000
                 }
             };
 
             // Act
-            Campaign campaign =  TestCampaigns.CreateCampaignTest(new AdWordsUser(), campaignDto);
+            CampaignReturnValue campaign =  Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
 
             // Assert
-            Assert.AreEqual(DateTime.Now.ToString("yyyyMMdd"), campaign.startDate);
-            Assert.AreEqual(DateTime.Now.AddYears(1).ToString("yyyyMMdd"), campaign.endDate);
-            Assert.AreEqual(2, (int)campaign.status);
-            Assert.AreEqual(true, campaign.networkSetting.targetGoogleSearch);
-            Assert.AreEqual(false, campaign.networkSetting.targetPartnerSearchNetwork);
+            Assert.AreEqual(DateTime.Now.ToString("yyyyMMdd"), campaign.value[0].startDate);
+            Assert.AreEqual(DateTime.Now.AddYears(1).ToString("yyyyMMdd"), campaign.value[0].endDate);
+            Assert.AreEqual(2, (int)campaign.value[0].status);
+            Assert.AreEqual(true, campaign.value[0].networkSetting.targetGoogleSearch);
+            Assert.AreEqual(false, campaign.value[0].networkSetting.targetPartnerSearchNetwork);
 
         }
 
@@ -49,21 +48,21 @@ namespace AdwordsModuleApiTest
             // Arrange
             CampaignDto campaignDto = new CampaignDto
             {
-                Name = "Test Campaign",
+                Name = DateTime.Now.ToString(),
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
                 Budget = new BudgetDto
                 {
-                    Name = "Test Budget",
-                    MicroAmount = 50
+                    Name = DateTime.Now.ToString(),
+                    MicroAmount = 5000000
                 }
             };
 
             // Act
-            Budget budget = TestCampaigns.CreateBudgetTest(new AdWordsUser(), campaignDto);
+            Budget budget = Budgets.CreateBudget(new AdWordsUser(), campaignDto);
 
             // Assert
-            Assert.AreEqual(50, budget.amount.microAmount);
+            Assert.AreEqual(5000000, budget.amount.microAmount);
             Assert.AreEqual(false, budget.isExplicitlyShared);
             Assert.AreEqual(0, (int)budget.deliveryMethod);
         }
@@ -75,11 +74,13 @@ namespace AdwordsModuleApiTest
             List<Campaign> campaigns = Campaigns.GetCampaigns(new AdWordsUser());
 
             // Act
-            Campaign[] camp = campaigns.Where(campa => campa.name == "Interplanetary Cruise #1").ToArray();
+
+            
+            Campaign[] camp = campaigns.Where(campa => campa.name == "Test kampagne").ToArray();
 
             // Assert
             Assert.AreNotEqual(0, campaigns.Count);
-            Assert.AreEqual(969950091, camp[0].id);
+            Assert.AreEqual(980217086, camp[0].id);
         }
     }
 }
