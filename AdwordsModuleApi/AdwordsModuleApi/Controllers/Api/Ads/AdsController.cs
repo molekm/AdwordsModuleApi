@@ -22,24 +22,29 @@ namespace AdwordsModuleApi.Controllers.Api.Ads
         [HttpGet]
         public IHttpActionResult GetAd()
         {
-            ActivateCampaign activate = new ActivateCampaign()
-            {
-                CampaignId = 980217086,
-                ExpandedTextAd =
-                {
-                    new ExpandedTextAdDto()
-                    {
-                        HeadLinePart1 = "Test HeadLine1",
-                        HeadLinePart2 = "Test HeadLine2",
-                        Description =  "Endnu et test produkt",
-                        FinalUrls = new []{ "http://nolleren.org/test" },
-                        ProductName = "Test Produkt",
-                        ProductNumber = "12345"
-                    }
-                }
-            };
+            Adwords.Keyword.GetKeyWords(
+                "Engelsk inspireret Porter, der er brygget på 5 forskellige malttyper, hvor nogle af dem er røgmalt, karamelmalt og chokolademalt");
 
-            Adwords.Campaigns.ActivateCampaign(activate);
+            
+
+            //ActivateCampaign activate = new ActivateCampaign()
+            //{
+            //    CampaignId = 980217086,
+            //    ExpandedTextAd =
+            //    {
+            //        new ExpandedTextAdDto()
+            //        {
+            //            HeadLinePart1 = "Test HeadLine1",
+            //            HeadLinePart2 = "Test HeadLine2",
+            //            Description =  "Endnu et test produkt",
+            //            FinalUrls = new []{ "http://nolleren.org/test" },
+            //            ProductName = "Test Produkt",
+            //            ProductNumber = "12345"
+            //        }
+            //    }
+            //};
+
+            //Adwords.Campaigns.ActivateCampaign(activate);
 
             return Ok();
         }
