@@ -24,6 +24,12 @@ namespace AdwordsModuleApi.Controllers.Api.Products
         {
             IEnumerable<Product> products = _dbContext.Products.ToList();
 
+            foreach (var item in products)
+            {
+                item.Description = item.Description.Replace("\r\n", "");
+                item.ExtraDescription = item.ExtraDescription.Replace("\r\n", "");
+            }
+
             return Ok(products);
         }
 
