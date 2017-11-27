@@ -101,7 +101,8 @@ namespace AdwordsModuleApi.Adwords
                     fields = new string[] {
                         Campaign.Fields.Id,
                         Campaign.Fields.Name,
-                        Campaign.Fields.Status
+                        Campaign.Fields.Status,
+                        Budget.Fields.Amount
                     },
                     paging = Paging.Default
                 };
