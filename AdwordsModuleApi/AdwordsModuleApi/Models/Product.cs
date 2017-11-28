@@ -14,4 +14,12 @@ namespace AdwordsModuleApi.Models
         public string Description { get; set; }
         public string ExtraDescription { get; set; }
     }
+
+    public class ProductItem
+    {
+        public AdContent AdContent { get; set; }
+        public Product Product { get; set; }
+        public string[] FinalUrl { get; set; }
+
+    }
 }

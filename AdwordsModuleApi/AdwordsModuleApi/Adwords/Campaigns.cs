@@ -132,21 +132,36 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public static void ActivateCampaign(ActivateCampaign campaign)
+        public static List<AdGroupAdReturnValue> ActivateCampaign(AdWordsContent campaign)
         {
             AdWordsUser adWordsUser = new AdWordsUser();
             AdGroupReturnValue adGroup;
+            List<AdGroupAdReturnValue> returnValues = new List<AdGroupAdReturnValue>();
 
-            ExpandedTextAdDto[] expandedTextAds = campaign.ExpandedTextAd.ToArray();
+            ProductItem[] expandedTextAds = campaign.ContentProducts.ToArray();
+
+            long amount = campaign.ContentCampaign.MicroAmount / expandedTextAds.Length;
+
+            amount = Round(amount);
 
             for (int i = 0; i < expandedTextAds.Length; i++)
             {
-                adGroup = AddAdGroup.CreateAdGroup(adWordsUser, campaign.CampaignId, expandedTextAds[i]);
-                AdGroupAdReturnValue textAd = ExpandedTextAds.CreateTextAdd(adWordsUser, adGroup.value[0].id, expandedTextAds[i]);
+                adGroup = AddAdGroup.CreateAdGroup(adWordsUser, campaign.ContentCampaign.Id, expandedTextAds[i], amount);
+                returnValues.Add(ExpandedTextAds.CreateTextAdd(adWordsUser, adGroup.value[0].id, expandedTextAds[i])); 
             }
 
-            SetCampaignStatus(adWordsUser, campaign.CampaignId, CampaignStatus.ENABLED);
+            SetCampaignStatus(adWordsUser, campaign.ContentCampaign.Id, CampaignStatus.ENABLED);
 
+            return returnValues;
+        }
+
+        private static long Round(long amount)
+        {
+            decimal result = amount;
+
+            result = Math.Round(result / 1000000);
+
+            return (long)result * 1000000;
         }
 
         private static void SetCampaignStatus(AdWordsUser user, long campaignId, CampaignStatus campaignStatus)

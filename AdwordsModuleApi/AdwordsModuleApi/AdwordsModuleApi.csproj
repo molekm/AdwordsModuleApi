@@ -200,10 +200,10 @@
       <DependentUpon>201711161754529_CorrectionOnLogicName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ActivateCampaign.cs" />
+    <Compile Include="Models\AdContent.cs" />
+    <Compile Include="Models\AdWordsContent.cs" />
     <Compile Include="Models\BudgetDto.cs" />
     <Compile Include="Models\CampaignDto.cs" />
-    <Compile Include="Models\ExpandedTextAdDto.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

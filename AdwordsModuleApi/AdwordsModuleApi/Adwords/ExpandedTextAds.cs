@@ -10,7 +10,7 @@ namespace AdwordsModuleApi.Adwords
 {
     public class ExpandedTextAds
     {
-        public static AdGroupAdReturnValue CreateTextAdd(AdWordsUser user, long adGroupId, ExpandedTextAdDto expandedTextAdDto)
+        public static AdGroupAdReturnValue CreateTextAdd(AdWordsUser user, long adGroupId, ProductItem expandedTextAdDto)
         {
             using (AdGroupAdService adGroupAdService =
                 (AdGroupAdService)user.GetService(AdWordsService.v201710.AdGroupAdService))
@@ -20,10 +20,10 @@ namespace AdwordsModuleApi.Adwords
 
                     // Create the expanded text ad.
                     ExpandedTextAd expandedTextAd = new ExpandedTextAd();
-                    expandedTextAd.headlinePart1 = expandedTextAdDto.HeadLinePart1;
-                    expandedTextAd.headlinePart2 = expandedTextAdDto.HeadLinePart2;
-                    expandedTextAd.description = expandedTextAdDto.Description;
-                    expandedTextAd.finalUrls = expandedTextAdDto.FinalUrls;
+                    expandedTextAd.headlinePart1 = expandedTextAdDto.AdContent.HeadLinePart1;
+                    expandedTextAd.headlinePart2 = expandedTextAdDto.AdContent.HeadLinePart2;
+                    expandedTextAd.description = expandedTextAdDto.AdContent.Description;
+                    expandedTextAd.finalUrls = expandedTextAdDto.FinalUrl;
 
                     AdGroupAd expandedTextAdGroupAd = new AdGroupAd();
                     expandedTextAdGroupAd.adGroupId = adGroupId;
@@ -46,12 +46,60 @@ namespace AdwordsModuleApi.Adwords
                     // Create the ads.
                     retVal = adGroupAdService.mutate(operations.ToArray());
 
-                   
+
                     adGroupAdService.Close();
                 }
-                catch (Exception e)
+                catch (AdWordsApiException e)
                 {
-                    throw new System.ApplicationException("Failed to create expanded text ad.", e);
+                    ApiException innerException = e.ApiException as ApiException;
+                    if (innerException == null)
+                    {
+                        throw new Exception("Failed to retrieve ApiError. See inner exception for more " +
+                                            "details.", e);
+                    }
+
+                    // Examine each ApiError received from the server.
+                    foreach (ApiError apiError in innerException.errors)
+                    {
+                        int index = apiError.GetOperationIndex();
+                        if (index == -1)
+                        {
+                            // This API error is not associated with an operand, so we cannot
+                            // recover from this error by removing one or more operations.
+                            // Rethrow the exception for manual inspection.
+                            throw;
+                        }
+
+                        // Handle policy violation errors.
+                        if (apiError is PolicyViolationError)
+                        {
+                            PolicyViolationError policyError = (PolicyViolationError) apiError;
+
+                            if (policyError.isExemptable)
+                            {
+                                // If the policy violation error is exemptable, add an exemption
+                                // request.
+                                List<ExemptionRequest> exemptionRequests = new List<ExemptionRequest>();
+
+                            }
+                            else
+                            {
+                                // Policy violation error is not exemptable, remove this
+                                // operation from the list of operations.
+
+                            }
+                        }
+                        else
+                        {
+                            // This is not a policy violation error, remove this operation
+                            // from the list of operations.
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new System.ApplicationException("Failed to create expanded text ad.", ex);
                 }
                 return retVal;
             }

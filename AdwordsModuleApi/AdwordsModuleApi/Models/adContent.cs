@@ -5,13 +5,12 @@ using System.Web;
 
 namespace AdwordsModuleApi.Models
 {
-    public class ExpandedTextAdDto
+    public class AdContent
     {
         public string HeadLinePart1 { get; set; }
         public string HeadLinePart2 { get; set; }
+        public string Path { get; set; }
         public string Description { get; set; }
-        public string[] FinalUrls { get; set; }
-        public string ProductName { get; set; }
-        public string ProductNumber { get; set; }
+
     }
 }

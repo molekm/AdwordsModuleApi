@@ -10,17 +10,16 @@ namespace AdwordsModuleApi.Adwords
 {
     public class AddAdGroup
     {
-        public static AdGroupReturnValue CreateAdGroup(AdWordsUser user, int campaignId, ExpandedTextAdDto expandedTextAd)
+        public static AdGroupReturnValue CreateAdGroup(AdWordsUser user, int campaignId, ProductItem expandedTextAd, long amount)
         {
             using (AdGroupService adGroupService =
                 (AdGroupService)user.GetService(AdWordsService.v201710.AdGroupService))
             {
                 List<AdGroupOperation> operations = new List<AdGroupOperation>();
-
-                
+              
                     // Create the ad group.
                     AdGroup adGroup = new AdGroup();
-                    adGroup.name = expandedTextAd.ProductName;
+                    adGroup.name = $"{expandedTextAd.Product.ProductNumber} {expandedTextAd.Product.ProductName}";
                     adGroup.status = AdGroupStatus.ENABLED;
                     adGroup.campaignId = campaignId;
 
@@ -29,7 +28,7 @@ namespace AdwordsModuleApi.Adwords
 
                     CpcBid cpcBid = new CpcBid();
                     cpcBid.bid = new Money();
-                    cpcBid.bid.microAmount = 10000000;
+                    cpcBid.bid.microAmount = amount;
 
                     biddingConfig.bids = new Bids[] { cpcBid };
 
