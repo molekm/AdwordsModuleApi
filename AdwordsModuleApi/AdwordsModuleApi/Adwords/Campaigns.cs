@@ -5,11 +5,13 @@ using System.Web;
 using AdwordsModuleApi.Models;
 using Google.Api.Ads.AdWords.Lib;
 using Google.Api.Ads.AdWords.v201710;
+using Microsoft.Ajax.Utilities;
 
 namespace AdwordsModuleApi.Adwords
 {
     public static class Campaigns
     {
+        static AdwordsKeyword adwordsKeyword = new AdwordsKeyword();
 
         public static CampaignReturnValue CreateCampaign(AdWordsUser user, CampaignDto campaignDto)
         {
@@ -136,6 +138,7 @@ namespace AdwordsModuleApi.Adwords
         {
             AdWordsUser adWordsUser = new AdWordsUser();
             AdGroupReturnValue adGroup;
+            AdGroupCriterionReturnValue adKeyWord;
             List<AdGroupAdReturnValue> returnValues = new List<AdGroupAdReturnValue>();
 
             ProductItem[] expandedTextAds = campaign.ContentProducts.ToArray();
@@ -146,13 +149,37 @@ namespace AdwordsModuleApi.Adwords
 
             for (int i = 0; i < expandedTextAds.Length; i++)
             {
+                string[] keywords = GetKeyWords(expandedTextAds[i].Product.ExtraDescription);
                 adGroup = AddAdGroup.CreateAdGroup(adWordsUser, campaign.ContentCampaign.Id, expandedTextAds[i], amount);
+                adKeyWord = adwordsKeyword.AdKeyWordsToAdGroup(adWordsUser, adGroup.value[0].id, keywords);
                 returnValues.Add(ExpandedTextAds.CreateTextAdd(adWordsUser, adGroup.value[0].id, expandedTextAds[i])); 
             }
 
             SetCampaignStatus(adWordsUser, campaign.ContentCampaign.Id, CampaignStatus.ENABLED);
 
             return returnValues;
+        }
+
+        private static string[] GetKeyWords(string text)
+        {
+            List<KeyValuePair> keyValuePair = new List<KeyValuePair>();
+
+            string[] keywords = text.Replace(",", "").Replace(".", "").Split();
+
+            keywords = keywords.Distinct().ToArray();
+
+            keyValuePair = adwordsKeyword.GetKeyWords(new AdWordsUser(), keywords);
+
+            keyValuePair = keyValuePair.OrderByDescending(order => order.Value).Take(10).ToList();
+
+            keywords = new string[keyValuePair.Count];
+
+            for (int i = 0; i < keyValuePair.Count; i++)
+            {
+                keywords[i] = keyValuePair.ElementAt(i).Keyword;
+            }
+
+            return keywords;
         }
 
         private static long Round(long amount)

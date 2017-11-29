@@ -20,6 +20,7 @@ namespace AdwordsModuleApi.Adwords
 
                     // Create the expanded text ad.
                     ExpandedTextAd expandedTextAd = new ExpandedTextAd();
+                    expandedTextAd.path1 = expandedTextAdDto.AdContent.Path;
                     expandedTextAd.headlinePart1 = expandedTextAdDto.AdContent.HeadLinePart1;
                     expandedTextAd.headlinePart2 = expandedTextAdDto.AdContent.HeadLinePart2;
                     expandedTextAd.description = expandedTextAdDto.AdContent.Description;
