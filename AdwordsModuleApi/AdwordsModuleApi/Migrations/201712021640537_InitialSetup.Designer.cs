@@ -7,13 +7,13 @@ namespace AdwordsModuleApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ComeOn : IMigrationMetadata
+    public sealed partial class InitialSetup : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ComeOn));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialSetup));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711161629109_ComeOn"; }
+            get { return "201712021640537_InitialSetup"; }
         }
         
         string IMigrationMetadata.Source

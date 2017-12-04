@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,7 +14,7 @@ namespace AdwordsModuleApi.Controllers.Api.Products
     [Route("api/products")]
     public class ProductsController : ApiController
     {
-        public ProductDbContext _dbContext;
+        private readonly ProductDbContext _dbContext;
 
         public ProductsController()
         {
@@ -22,12 +23,17 @@ namespace AdwordsModuleApi.Controllers.Api.Products
 
         public IHttpActionResult GetProducts()
         {
-            IEnumerable<Product> products = _dbContext.Products.ToList();
+            var products = _dbContext.AdGroupHos.Include(p => p.ProductLos).ToList();
 
-            foreach (var item in products)
+            foreach (var productGroup in products)
             {
-                item.Description = item.Description.Replace("\r\n", "");
-                item.ExtraDescription = item.ExtraDescription.Replace("\r\n", "");
+                for (int i = 0; i < productGroup.ProductLos.Count; i++)
+                {
+                    productGroup.ProductLos.ElementAt(i).Description =
+                        productGroup.ProductLos.ElementAt(i).Description.Replace("\r\n", "");
+                    productGroup.ProductLos.ElementAt(i).DescriptionShort =
+                        productGroup.ProductLos.ElementAt(i).DescriptionShort.Replace("\r\n", "");
+                }
             }
 
             return Ok(products);

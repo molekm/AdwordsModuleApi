@@ -18,12 +18,12 @@ namespace AdwordsModuleApiTest
         public void CreateCampaignTest()
         {
             // Arrange
-            CampaignDto campaignDto = new CampaignDto
+            CampaignLo campaignDto = new CampaignLo
             {
                 Name = DateTime.Now.ToString(),
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
-                Budget = new BudgetDto
+                Budget = new BudgetLo
                 {
                     Name = DateTime.Now.ToString(),
                     MicroAmount = 5000000
@@ -46,12 +46,12 @@ namespace AdwordsModuleApiTest
         public void CreateBudgetTest()
         {
             // Arrange
-            CampaignDto campaignDto = new CampaignDto
+            CampaignLo campaignDto = new CampaignLo
             {
                 Name = DateTime.Now.ToString(),
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
-                Budget = new BudgetDto
+                Budget = new BudgetLo
                 {
                     Name = DateTime.Now.ToString(),
                     MicroAmount = 5000000

@@ -26,6 +26,10 @@ namespace AdwordsModuleApi
                 .SerializerSettings
                 .ContractResolver = new CamelCasePropertyNamesContractResolver();
 
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+                = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling
+                = Newtonsoft.Json.PreserveReferencesHandling.Objects;
         }
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {

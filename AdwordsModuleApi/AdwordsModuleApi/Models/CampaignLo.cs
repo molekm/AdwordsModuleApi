@@ -5,16 +5,16 @@ using System.Web;
 
 namespace AdwordsModuleApi.Models
 {
-    public class CampaignDto
+    public class CampaignLo
     {
-        public CampaignDto()
+        public CampaignLo()
         {
-            Budget = new BudgetDto();
+            Budget = new BudgetLo();
         }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public BudgetDto Budget { get; set; }
+        public BudgetLo Budget { get; set; }
     }
 
     public class CampaignItem

@@ -67,6 +67,7 @@ namespace AdwordsModuleApi.Adwords
 
                 // Set selector paging (required for targeting idea service).
                 Paging paging = Paging.Default;
+                paging.numberResults = 10000;
 
                 selector.paging = paging;
 
@@ -110,7 +111,7 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public AdGroupCriterionReturnValue AdKeyWordsToAdGroup(AdWordsUser user, long adGroupId, string[] keyWords)
+        public AdGroupCriterionReturnValue AdKeyWordsToAdGroup(AdWordsUser user, long adGroupId)
         {
             using (AdGroupCriterionService adGroupCriterionService =
                 (AdGroupCriterionService)user.GetService(
@@ -118,6 +119,8 @@ namespace AdwordsModuleApi.Adwords
             {
                 AdGroupCriterionReturnValue retVal = new AdGroupCriterionReturnValue();
                 List<AdGroupCriterionOperation> operations = new List<AdGroupCriterionOperation>();
+
+                string[] keyWords = new string[] { "ostekage", "black friday", "malt"};
 
                 foreach (string keywordText in keyWords)
                 {

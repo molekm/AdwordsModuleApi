@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AdwordsModuleApi.Models
 {
-    public class BudgetDto
+    public class BudgetLo
     {
         public string Name { get; set; }
         public long MicroAmount { get; set; }

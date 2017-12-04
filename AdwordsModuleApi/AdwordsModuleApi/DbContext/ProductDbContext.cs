@@ -10,7 +10,11 @@ namespace AdwordsModuleApi.DbContext
 {
     public class ProductDbContext : System.Data.Entity.DbContext
     {
-
-        public DbSet<Product> Products { get; set; }
+        public ProductDbContext()
+        {
+            Configuration.ProxyCreationEnabled = false;
+        }
+        public DbSet<ProductLo> Products { get; set; }
+        public DbSet<ProductGroupLo> AdGroupHos { get; set; }
     }
 }

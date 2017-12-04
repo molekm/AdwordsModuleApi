@@ -16,7 +16,7 @@ namespace AdwordsModuleApi.Controllers.Api.Campaigns
     public class CampaignsController : ApiController
     {
         [HttpPost]
-        public IHttpActionResult CreateCampaign([FromBody]CampaignDto campaignDto)
+        public IHttpActionResult CreateCampaign([FromBody]CampaignLo campaignDto)
         {
             CampaignReturnValue camp = Adwords.Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
 

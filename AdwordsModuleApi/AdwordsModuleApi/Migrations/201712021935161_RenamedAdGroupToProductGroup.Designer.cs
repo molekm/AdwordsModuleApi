@@ -7,13 +7,13 @@ namespace AdwordsModuleApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CorrectionOnLogicName : IMigrationMetadata
+    public sealed partial class RenamedAdGroupToProductGroup : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CorrectionOnLogicName));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RenamedAdGroupToProductGroup));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711161754529_CorrectionOnLogicName"; }
+            get { return "201712021935161_RenamedAdGroupToProductGroup"; }
         }
         
         string IMigrationMetadata.Source

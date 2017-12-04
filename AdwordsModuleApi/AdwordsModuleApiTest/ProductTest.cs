@@ -19,7 +19,7 @@ namespace AdwordsModuleApiTest
             ProductDbContext dbContext = new ProductDbContext();
 
             // Act
-            Product[] products = dbContext.Products.ToArray();
+            ProductLo[] products = dbContext.Products.ToArray();
 
             // Assert
             Assert.AreNotEqual(products.Length, 0);

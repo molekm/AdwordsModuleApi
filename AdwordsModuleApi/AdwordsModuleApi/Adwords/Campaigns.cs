@@ -13,7 +13,7 @@ namespace AdwordsModuleApi.Adwords
     {
         static AdwordsKeyword adwordsKeyword = new AdwordsKeyword();
 
-        public static CampaignReturnValue CreateCampaign(AdWordsUser user, CampaignDto campaignDto)
+        public static CampaignReturnValue CreateCampaign(AdWordsUser user, CampaignLo campaignDto)
         {
             using (CampaignService campaignService =
                 (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
@@ -134,7 +134,7 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public static List<AdGroupAdReturnValue> ActivateCampaign(AdWordsContent campaign)
+        public static List<AdGroupAdReturnValue> ActivateCampaign(AdWordsContentLo campaign)
         {
             AdWordsUser adWordsUser = new AdWordsUser();
             AdGroupReturnValue adGroup;
@@ -149,9 +149,9 @@ namespace AdwordsModuleApi.Adwords
 
             for (int i = 0; i < expandedTextAds.Length; i++)
             {
-                string[] keywords = GetKeyWords(expandedTextAds[i].Product.ExtraDescription);
+                //string[] keywords = GetKeyWords(expandedTextAds[i].Product.ExtraDescription);
                 adGroup = AddAdGroup.CreateAdGroup(adWordsUser, campaign.ContentCampaign.Id, expandedTextAds[i], amount);
-                adKeyWord = adwordsKeyword.AdKeyWordsToAdGroup(adWordsUser, adGroup.value[0].id, keywords);
+                adKeyWord = adwordsKeyword.AdKeyWordsToAdGroup(adWordsUser, adGroup.value[0].id);
                 returnValues.Add(ExpandedTextAds.CreateTextAdd(adWordsUser, adGroup.value[0].id, expandedTextAds[i])); 
             }
 

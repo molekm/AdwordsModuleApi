@@ -11,7 +11,7 @@ namespace AdwordsModuleApi.Adwords
     public static class Budgets
     {
 
-        public static Budget CreateBudget(AdWordsUser user, CampaignDto campaignDto)
+        public static Budget CreateBudget(AdWordsUser user, CampaignLo campaignDto)
         {
             using (BudgetService budgetService =
                 (BudgetService)user.GetService(AdWordsService.v201710.BudgetService))

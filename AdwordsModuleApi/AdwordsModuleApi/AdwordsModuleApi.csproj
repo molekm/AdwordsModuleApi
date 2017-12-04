@@ -191,20 +191,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711161629109_ComeOn.cs" />
-    <Compile Include="Migrations\201711161629109_ComeOn.Designer.cs">
-      <DependentUpon>201711161629109_ComeOn.cs</DependentUpon>
+    <Compile Include="Migrations\201712021640537_InitialSetup.cs" />
+    <Compile Include="Migrations\201712021640537_InitialSetup.Designer.cs">
+      <DependentUpon>201712021640537_InitialSetup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711161754529_CorrectionOnLogicName.cs" />
-    <Compile Include="Migrations\201711161754529_CorrectionOnLogicName.Designer.cs">
-      <DependentUpon>201711161754529_CorrectionOnLogicName.cs</DependentUpon>
+    <Compile Include="Migrations\201712021935161_RenamedAdGroupToProductGroup.cs" />
+    <Compile Include="Migrations\201712021935161_RenamedAdGroupToProductGroup.Designer.cs">
+      <DependentUpon>201712021935161_RenamedAdGroupToProductGroup.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AdContent.cs" />
-    <Compile Include="Models\AdWordsContent.cs" />
-    <Compile Include="Models\BudgetDto.cs" />
-    <Compile Include="Models\CampaignDto.cs" />
-    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\AdContentLo.cs" />
+    <Compile Include="Models\ProductGroupLo.cs" />
+    <Compile Include="Models\AdWordsContentLo.cs" />
+    <Compile Include="Models\BudgetLo.cs" />
+    <Compile Include="Models\CampaignLo.cs" />
+    <Compile Include="Models\ProductLo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -263,11 +264,11 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711161629109_ComeOn.resx">
-      <DependentUpon>201711161629109_ComeOn.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712021640537_InitialSetup.resx">
+      <DependentUpon>201712021640537_InitialSetup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711161754529_CorrectionOnLogicName.resx">
-      <DependentUpon>201711161754529_CorrectionOnLogicName.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712021935161_RenamedAdGroupToProductGroup.resx">
+      <DependentUpon>201712021935161_RenamedAdGroupToProductGroup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

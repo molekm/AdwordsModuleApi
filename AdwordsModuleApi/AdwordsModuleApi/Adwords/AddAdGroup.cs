@@ -10,16 +10,17 @@ namespace AdwordsModuleApi.Adwords
 {
     public class AddAdGroup
     {
+        static int count = 0;
         public static AdGroupReturnValue CreateAdGroup(AdWordsUser user, int campaignId, ProductItem expandedTextAd, long amount)
         {
             using (AdGroupService adGroupService =
                 (AdGroupService)user.GetService(AdWordsService.v201710.AdGroupService))
             {
                 List<AdGroupOperation> operations = new List<AdGroupOperation>();
-              
+                
                     // Create the ad group.
                     AdGroup adGroup = new AdGroup();
-                    adGroup.name = $"{expandedTextAd.Product.ProductNumber} {expandedTextAd.Product.ProductName}";
+                    adGroup.name = "adGroupName";
                     adGroup.status = AdGroupStatus.ENABLED;
                     adGroup.campaignId = campaignId;
 
