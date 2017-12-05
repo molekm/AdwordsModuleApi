@@ -199,8 +199,13 @@
     <Compile Include="Migrations\201712021935161_RenamedAdGroupToProductGroup.Designer.cs">
       <DependentUpon>201712021935161_RenamedAdGroupToProductGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712041542297_KeyValuePair.cs" />
+    <Compile Include="Migrations\201712041542297_KeyValuePair.Designer.cs">
+      <DependentUpon>201712041542297_KeyValuePair.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdContentLo.cs" />
+    <Compile Include="Models\KeyValuePair.cs" />
     <Compile Include="Models\ProductGroupLo.cs" />
     <Compile Include="Models\AdWordsContentLo.cs" />
     <Compile Include="Models\BudgetLo.cs" />
@@ -269,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712021935161_RenamedAdGroupToProductGroup.resx">
       <DependentUpon>201712021935161_RenamedAdGroupToProductGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712041542297_KeyValuePair.resx">
+      <DependentUpon>201712041542297_KeyValuePair.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

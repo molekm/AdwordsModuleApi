@@ -23,7 +23,7 @@ namespace AdwordsModuleApi.Controllers.Api.Products
 
         public IHttpActionResult GetProducts()
         {
-            var products = _dbContext.AdGroupHos.Include(p => p.ProductLos).ToList();
+            var products = _dbContext.AdGroupHos.Include(p => p.ProductLos.Select(kv => kv.KeyValuePairs));
 
             foreach (var productGroup in products)
             {

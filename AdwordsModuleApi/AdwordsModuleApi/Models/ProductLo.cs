@@ -15,6 +15,7 @@ namespace AdwordsModuleApi.Models
         public string DescriptionShort { get; set; }
         public ProductGroupLo AdGroupLo { get; set; }
         public int AdGroupLoId { get; set; }
+        public List<KeyValuePair> KeyValuePairs { get; set; }
     }
 
     public class ProductItem
