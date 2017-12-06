@@ -8,10 +8,10 @@ using Google.Api.Ads.AdWords.v201710;
 
 namespace AdwordsModuleApi.Adwords
 {
-    public class AddAdGroup
+    public class AdGroupAdwords
     {
         static int count = 0;
-        public static AdGroupReturnValue CreateAdGroup(AdWordsUser user, int campaignId, ProductItem expandedTextAd, long amount)
+        public static AdGroupReturnValue CreateAdGroup(AdWordsUser user, AdGroupLo adGroupLo )
         {
             using (AdGroupService adGroupService =
                 (AdGroupService)user.GetService(AdWordsService.v201710.AdGroupService))
@@ -20,16 +20,16 @@ namespace AdwordsModuleApi.Adwords
                 
                     // Create the ad group.
                     AdGroup adGroup = new AdGroup();
-                    adGroup.name = "adGroupName";
-                    adGroup.status = AdGroupStatus.ENABLED;
-                    adGroup.campaignId = campaignId;
+                    adGroup.name = adGroupLo.Name;
+                    adGroup.status = AdGroupStatus.PAUSED;
+                    adGroup.campaignId = adGroupLo.CampaignId;
 
                     // Set the ad group bids.
                     BiddingStrategyConfiguration biddingConfig = new BiddingStrategyConfiguration();
 
                     CpcBid cpcBid = new CpcBid();
                     cpcBid.bid = new Money();
-                    cpcBid.bid.microAmount = amount;
+                    cpcBid.bid.microAmount = 10000000;
 
                     biddingConfig.bids = new Bids[] { cpcBid };
 
@@ -85,6 +85,83 @@ namespace AdwordsModuleApi.Adwords
                     throw new System.ApplicationException("Failed to create ad group.", e);
                 }
                 return returnDGroup;
+            }
+        }
+
+        public static List<AdGroup> GetAdGroups(AdWordsUser user, long campaignId)
+        {
+            using (AdGroupService adGroupService =
+                (AdGroupService)user.GetService(AdWordsService.v201710.AdGroupService))
+            {
+
+                // Create the selector.
+                Selector selector = new Selector()
+                {
+                    fields = new string[] { AdGroup.Fields.Id, AdGroup.Fields.Name, AdGroup.Fields.CampaignId },
+                    predicates = new Predicate[] {
+                        Predicate.Equals(AdGroup.Fields.CampaignId, campaignId)
+                    },
+                    paging = Paging.Default,
+                    ordering = new OrderBy[] { OrderBy.Asc(AdGroup.Fields.Name) }
+                };
+
+                AdGroupPage page = new AdGroupPage();
+
+                List<AdGroup> result = new List<AdGroup>();
+
+                try
+                {
+                        // Get the ad groups.
+                        page = adGroupService.get(selector);
+
+                    if(page.entries != null)
+                    {
+                        foreach (AdGroup item in page.entries)
+                        {
+                            if (item.status == AdGroupStatus.PAUSED || item.status == AdGroupStatus.UNKNOWN)
+                            {
+                                result.Add(item);
+                            }
+                        }
+                    }
+                    
+                }
+                catch (Exception e)
+                {
+                    throw new System.ApplicationException("Failed to retrieve ad groups.", e);
+                }
+                return result;
+            }
+        }
+        public static AdGroupReturnValue SetAdGroupStatus(AdWordsUser user, long adGroupId, AdGroupStatus adGroupStatus)
+        {
+            using (AdGroupService adGroupService = (AdGroupService)user.GetService(
+                AdWordsService.v201710.AdGroupService))
+            {
+
+                // Create ad group with REMOVED status.
+                AdGroup adGroup = new AdGroup();
+                adGroup.id = adGroupId;
+                adGroup.status = adGroupStatus;
+
+                // Create the operation.
+                AdGroupOperation operation = new AdGroupOperation();
+                operation.operand = adGroup;
+                operation.@operator = Operator.SET;
+
+                AdGroupReturnValue retVal;
+
+                try
+                {
+                    // Remove the ad group.
+                    retVal = adGroupService.mutate(new AdGroupOperation[] { operation });
+
+                }
+                catch (Exception e)
+                {
+                    throw new System.ApplicationException("Failed to remove ad group.", e);
+                }
+                return retVal;
             }
         }
     }

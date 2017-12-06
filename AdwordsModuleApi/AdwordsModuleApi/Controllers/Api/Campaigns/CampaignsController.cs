@@ -30,5 +30,15 @@ namespace AdwordsModuleApi.Controllers.Api.Campaigns
 
             return Ok(campaigns);
         }
+
+        [Route("api/campaign/{id:int}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteCampaign(int id)
+        {
+            int test = id;
+            CampaignReturnValue camp = Adwords.Campaigns.SetCampaignStatus(new AdWordsUser(), id, CampaignStatus.REMOVED);
+
+            return Ok(camp);
+        }
     }
 }

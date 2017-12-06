@@ -104,6 +104,8 @@ namespace AdwordsModuleApi.Adwords
                         Campaign.Fields.Id,
                         Campaign.Fields.Name,
                         Campaign.Fields.Status,
+                        Campaign.Fields.StartDate,
+                        Campaign.Fields.EndDate,
                         Budget.Fields.Amount
                     },
                     paging = Paging.Default
@@ -121,7 +123,9 @@ namespace AdwordsModuleApi.Adwords
                         {
                             foreach (Campaign campaign in page.entries)
                             {
-                                if(campaign.status != CampaignStatus.ENABLED)
+                                if (campaign.status != CampaignStatus.REMOVED)
+                                    campaign.startDate = FormatDateString(campaign.startDate);
+                                    campaign.endDate = FormatDateString(campaign.endDate);
                                     campaigns.Add(campaign);
                             }
                         }
@@ -134,53 +138,16 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public static List<AdGroupAdReturnValue> ActivateCampaign(AdWordsContentLo campaign)
+        static string FormatDateString(string datestring)
         {
-            AdWordsUser adWordsUser = new AdWordsUser();
-            AdGroupReturnValue adGroup;
-            AdGroupCriterionReturnValue adKeyWord;
-            List<AdGroupAdReturnValue> returnValues = new List<AdGroupAdReturnValue>();
+            string year = datestring.Substring(0, 4);
+            string month = datestring.Substring(4, 2);
+            string day = datestring.Substring(6, 2);
 
-            ProductItem[] expandedTextAds = campaign.ContentProducts.ToArray();
-
-            long amount = campaign.ContentCampaign.MicroAmount / expandedTextAds.Length;
-
-            amount = Round(amount);
-
-            for (int i = 0; i < expandedTextAds.Length; i++)
-            {
-                //string[] keywords = GetKeyWords(expandedTextAds[i].Product.ExtraDescription);
-                adGroup = AddAdGroup.CreateAdGroup(adWordsUser, campaign.ContentCampaign.Id, expandedTextAds[i], amount);
-                adKeyWord = adwordsKeyword.AdKeyWordsToAdGroup(adWordsUser, adGroup.value[0].id);
-                returnValues.Add(ExpandedTextAds.CreateTextAdd(adWordsUser, adGroup.value[0].id, expandedTextAds[i])); 
-            }
-
-            SetCampaignStatus(adWordsUser, campaign.ContentCampaign.Id, CampaignStatus.ENABLED);
-
-            return returnValues;
+            return $"{day}/{month}/{year}";
         }
 
-        private static string[] GetKeyWords(string text)
-        {
-            List<KeyValuePair> keyValuePair = new List<KeyValuePair>();
-
-            string[] keywords = text.Replace(",", "").Replace(".", "").Split();
-
-            keywords = keywords.Distinct().ToArray();
-
-            keyValuePair = adwordsKeyword.GetKeyWords(new AdWordsUser(), keywords);
-
-            keyValuePair = keyValuePair.OrderByDescending(order => order.Value).Take(10).ToList();
-
-            keywords = new string[keyValuePair.Count];
-
-            for (int i = 0; i < keyValuePair.Count; i++)
-            {
-                keywords[i] = keyValuePair.ElementAt(i).Keyword;
-            }
-
-            return keywords;
-        }
+       
 
         private static long Round(long amount)
         {
@@ -191,8 +158,9 @@ namespace AdwordsModuleApi.Adwords
             return (long)result * 1000000;
         }
 
-        private static void SetCampaignStatus(AdWordsUser user, long campaignId, CampaignStatus campaignStatus)
+        public static CampaignReturnValue SetCampaignStatus(AdWordsUser user, long campaignId, CampaignStatus campaignStatus)
         {
+            CampaignReturnValue retVal;
             using (CampaignService campaignService =
                 (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
             {
@@ -210,7 +178,7 @@ namespace AdwordsModuleApi.Adwords
                 try
                 {
                     // Update the campaign.
-                    CampaignReturnValue retVal = campaignService.mutate(
+                    retVal = campaignService.mutate(
                         new CampaignOperation[] { operation });
 
                 }
@@ -218,6 +186,7 @@ namespace AdwordsModuleApi.Adwords
                 {
                     throw new System.ApplicationException("Failed to update campaign.", e);
                 }
+                return retVal;
             }
         }
     }

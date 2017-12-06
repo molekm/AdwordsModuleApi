@@ -9,7 +9,9 @@ namespace AdwordsModuleApi.Models
     {
         public string HeadLinePart1 { get; set; }
         public string HeadLinePart2 { get; set; }
-        public string Path { get; set; }
+        public string Path1 { get; set; }
+        public string Path2 { get; set; }
+
         public string Description { get; set; }
 
     }

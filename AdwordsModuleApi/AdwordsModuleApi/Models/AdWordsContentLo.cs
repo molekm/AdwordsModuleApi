@@ -7,7 +7,7 @@ namespace AdwordsModuleApi.Models
 {
     public class AdWordsContentLo
     {
-        public CampaignItem ContentCampaign { get; set; }
+        public AdGroupLo AdGroupLo { get; set; }
         public List<ProductItem> ContentProducts { get; set; }
 
     }

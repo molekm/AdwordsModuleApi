@@ -26,9 +26,14 @@ namespace AdwordsModuleApi.Controllers.Api.Ads
         [HttpPost]
         public IHttpActionResult CreateAds([FromBody]AdWordsContentLo adWordsContent)
         {
-            var result = Adwords.Campaigns.ActivateCampaign(adWordsContent);
+            var retVal = Adwords.ExpandedTextAds.CreateTextAds(new AdWordsUser(), adWordsContent);
 
-            return Ok(result);
+            Adwords.Campaigns.SetCampaignStatus(new AdWordsUser(), adWordsContent.AdGroupLo.CampaignId,
+                CampaignStatus.ENABLED);
+            Adwords.AdGroupAdwords.SetAdGroupStatus(new AdWordsUser(), adWordsContent.AdGroupLo.adGroupId,
+                AdGroupStatus.ENABLED);
+
+            return Ok(retVal);
         }
 
         [HttpGet]

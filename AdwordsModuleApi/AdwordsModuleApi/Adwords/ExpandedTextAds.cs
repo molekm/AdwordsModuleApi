@@ -10,7 +10,7 @@ namespace AdwordsModuleApi.Adwords
 {
     public class ExpandedTextAds
     {
-        public static AdGroupAdReturnValue CreateTextAdd(AdWordsUser user, long adGroupId, ProductItem expandedTextAdDto)
+        public static AdGroupAdReturnValue CreateTextAds(AdWordsUser user, AdWordsContentLo adWordsContent)
         {
             using (AdGroupAdService adGroupAdService =
                 (AdGroupAdService)user.GetService(AdWordsService.v201710.AdGroupAdService))
@@ -18,20 +18,23 @@ namespace AdwordsModuleApi.Adwords
 
                 List<AdGroupAdOperation> operations = new List<AdGroupAdOperation>();
 
+                for (int i = 0; i < adWordsContent.ContentProducts.Count; i++)
+                {
                     // Create the expanded text ad.
                     ExpandedTextAd expandedTextAd = new ExpandedTextAd();
-                    expandedTextAd.path1 = expandedTextAdDto.AdContent.Path;
-                    expandedTextAd.headlinePart1 = expandedTextAdDto.AdContent.HeadLinePart1;
-                    expandedTextAd.headlinePart2 = expandedTextAdDto.AdContent.HeadLinePart2;
-                    expandedTextAd.description = expandedTextAdDto.AdContent.Description;
-                    expandedTextAd.finalUrls = expandedTextAdDto.FinalUrl;
+                    expandedTextAd.headlinePart1 = adWordsContent.ContentProducts[i].AdContent.HeadLinePart1;
+                    expandedTextAd.headlinePart2 = adWordsContent.ContentProducts[i].AdContent.HeadLinePart2;
+                    expandedTextAd.path1 = adWordsContent.ContentProducts[i].AdContent.Path1 != "" ? adWordsContent.ContentProducts[i].AdContent.Path1 : "";
+                    expandedTextAd.path2 = adWordsContent.ContentProducts[i].AdContent.Path2 != "" ? adWordsContent.ContentProducts[i].AdContent.Path2 : "";
+                    expandedTextAd.description = adWordsContent.ContentProducts[i].AdContent.Description;
+                    expandedTextAd.finalUrls = adWordsContent.ContentProducts[i].FinalUrl;
 
                     AdGroupAd expandedTextAdGroupAd = new AdGroupAd();
-                    expandedTextAdGroupAd.adGroupId = adGroupId;
+                    expandedTextAdGroupAd.adGroupId = adWordsContent.AdGroupLo.adGroupId;
                     expandedTextAdGroupAd.ad = expandedTextAd;
 
                     // Optional: Set the status.
-                    expandedTextAdGroupAd.status = AdGroupAdStatus.ENABLED;
+                    expandedTextAdGroupAd.status = AdGroupAdStatus.PAUSED;
 
                     // Create the operation.
                     AdGroupAdOperation operation = new AdGroupAdOperation();
@@ -39,6 +42,7 @@ namespace AdwordsModuleApi.Adwords
                     operation.operand = expandedTextAdGroupAd;
 
                     operations.Add(operation);
+                }
 
                 AdGroupAdReturnValue retVal = null;
 
