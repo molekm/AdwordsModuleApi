@@ -97,7 +97,7 @@ namespace AdwordsModuleApi.Adwords
                 // Create the selector.
                 Selector selector = new Selector()
                 {
-                    fields = new string[] { AdGroup.Fields.Id, AdGroup.Fields.Name, AdGroup.Fields.CampaignId },
+                    fields = new string[] { AdGroup.Fields.Id, AdGroup.Fields.Name, AdGroup.Fields.CampaignId, AdGroup.Fields.Status },
                     predicates = new Predicate[] {
                         Predicate.Equals(AdGroup.Fields.CampaignId, campaignId)
                     },
@@ -118,7 +118,7 @@ namespace AdwordsModuleApi.Adwords
                     {
                         foreach (AdGroup item in page.entries)
                         {
-                            if (item.status == AdGroupStatus.PAUSED || item.status == AdGroupStatus.UNKNOWN)
+                            if (item.status == AdGroupStatus.PAUSED)
                             {
                                 result.Add(item);
                             }
