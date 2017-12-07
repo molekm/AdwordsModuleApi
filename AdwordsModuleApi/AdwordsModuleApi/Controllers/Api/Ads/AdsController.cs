@@ -21,6 +21,7 @@ namespace AdwordsModuleApi.Controllers.Api.Ads
         public AdsController()
         {
             this.dbContext = new ProductDbContext();
+
         }
 
         [HttpPost]
