@@ -207,11 +207,13 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdContentLo.cs" />
     <Compile Include="Models\AdGroupLo.cs" />
-    <Compile Include="Models\KeyValuePair.cs" />
+    <Compile Include="Models\CampaignItemLo.cs" />
+    <Compile Include="Models\KeyValuePairLo.cs" />
     <Compile Include="Models\ProductGroupLo.cs" />
     <Compile Include="Models\AdWordsContentLo.cs" />
     <Compile Include="Models\BudgetLo.cs" />
     <Compile Include="Models\CampaignLo.cs" />
+    <Compile Include="Models\ProductItemLo.cs" />
     <Compile Include="Models\ProductLo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

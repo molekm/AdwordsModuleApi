@@ -10,7 +10,6 @@ namespace AdwordsModuleApi.Adwords
 {
     public class AdGroupAdwords
     {
-        static int count = 0;
         public static AdGroupReturnValue CreateAdGroup(AdWordsUser user, AdGroupLo adGroupLo )
         {
             using (AdGroupService adGroupService =

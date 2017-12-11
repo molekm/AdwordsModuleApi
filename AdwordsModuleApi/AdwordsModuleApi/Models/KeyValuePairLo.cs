@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AdwordsModuleApi.Models
 {
-    public class KeyValuePair
+    public class KeyValuePairLo
     {
         public int Id { get; set; }
         public string Key { get; set; }
