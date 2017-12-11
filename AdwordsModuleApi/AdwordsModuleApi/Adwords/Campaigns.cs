@@ -11,8 +11,6 @@ namespace AdwordsModuleApi.Adwords
 {
     public static class Campaigns
     {
-        static AdwordsKeyword adwordsKeyword = new AdwordsKeyword();
-
         public static CampaignReturnValue CreateCampaign(AdWordsUser user, CampaignLo campaignDto)
         {
             using (CampaignService campaignService =
@@ -146,9 +144,7 @@ namespace AdwordsModuleApi.Adwords
 
             return $"{day}/{month}/{year}";
         }
-
-       
-
+        // Slettes hvis den ikke er nødvendig
         private static long Round(long amount)
         {
             decimal result = amount;

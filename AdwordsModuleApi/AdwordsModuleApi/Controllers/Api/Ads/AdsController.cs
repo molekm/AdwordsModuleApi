@@ -31,23 +31,10 @@ namespace AdwordsModuleApi.Controllers.Api.Ads
 
             Adwords.Campaigns.SetCampaignStatus(new AdWordsUser(), adWordsContent.AdGroupLo.CampaignId,
                 CampaignStatus.ENABLED);
-            Adwords.AdGroupAdwords.SetAdGroupStatus(new AdWordsUser(), adWordsContent.AdGroupLo.adGroupId,
+            AdGroupAdwords.SetAdGroupStatus(new AdWordsUser(), adWordsContent.AdGroupLo.adGroupId,
                 AdGroupStatus.ENABLED);
 
             return Ok(retVal);
         }
-
-        [HttpGet]
-        public IHttpActionResult GetAd()
-        {
-
-            var result = dbContext.AdGroupHos.Include(p => p.ProductLos).ToList();
-
-            // context.Makes.Include(m => m.Models)
-
-
-            return Ok("HEJSA");
-        }
-
     }
 }

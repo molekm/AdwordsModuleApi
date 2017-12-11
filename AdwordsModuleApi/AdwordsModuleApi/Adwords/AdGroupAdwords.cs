@@ -158,7 +158,7 @@ namespace AdwordsModuleApi.Adwords
                 }
                 catch (Exception e)
                 {
-                    throw new System.ApplicationException("Failed to remove ad group.", e);
+                    throw new System.ApplicationException("Failed to set ad group status.", e);
                 }
                 return retVal;
             }
