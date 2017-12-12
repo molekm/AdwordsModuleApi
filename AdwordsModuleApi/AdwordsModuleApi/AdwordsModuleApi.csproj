@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201712041542297_KeyValuePair.Designer.cs">
       <DependentUpon>201712041542297_KeyValuePair.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712121053342_ChangesToProduct.cs" />
+    <Compile Include="Migrations\201712121053342_ChangesToProduct.Designer.cs">
+      <DependentUpon>201712121053342_ChangesToProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdContentLo.cs" />
     <Compile Include="Models\AdGroupLo.cs" />
@@ -281,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712041542297_KeyValuePair.resx">
       <DependentUpon>201712041542297_KeyValuePair.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712121053342_ChangesToProduct.resx">
+      <DependentUpon>201712121053342_ChangesToProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
