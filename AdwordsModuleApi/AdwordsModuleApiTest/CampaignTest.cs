@@ -28,7 +28,7 @@ namespace AdwordsModuleApiTest
                     Name = DateTime.Now.ToString(),
                     MicroAmount = 5000000
                 }
-            };
+            }; 
 
             // Act
             CampaignReturnValue campaign =  Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
