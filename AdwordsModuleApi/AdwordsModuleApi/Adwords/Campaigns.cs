@@ -55,11 +55,11 @@ namespace AdwordsModuleApi.Adwords
                     campaign.settings = new Setting[] { geoSetting };
 
                     // Optional: Set the start date.
-                    campaignDto.StartDate = campaignDto.StartDate.AddHours(12);
+                    campaignDto.StartDate = campaignDto.StartDate.AddHours(10);
                     campaign.startDate = campaignDto.StartDate.ToString("yyyyMMdd");
 
                     // Optional: Set the end date.
-                    campaignDto.EndDate = campaignDto.EndDate.AddHours(12);
+                    campaignDto.EndDate = campaignDto.EndDate.AddHours(10);
                     campaign.endDate = campaignDto.EndDate.ToString("yyyyMMdd");
 
                     // Optional: Set the frequency cap.
@@ -138,7 +138,7 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        static bool CampaignEnded(Campaign campaign)
+        public static bool CampaignEnded(Campaign campaign)
         {
             var endDate = FormatDateString(campaign.endDate);
             var date = Convert.ToDateTime(endDate);
@@ -151,7 +151,7 @@ namespace AdwordsModuleApi.Adwords
             return ts.TotalMinutes > 0;
         }
 
-        static string FormatDateString(string datestring)
+        public static string FormatDateString(string datestring)
         {
             string year = datestring.Substring(0, 4);
             string month = datestring.Substring(4, 2);

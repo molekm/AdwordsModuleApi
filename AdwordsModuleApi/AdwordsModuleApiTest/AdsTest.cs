@@ -45,13 +45,27 @@ namespace AdwordsModuleApiTest
                     AdGroupId = adGroup.value[0].id,
                     Name = adGroup.value[0].name
                 },
-                ContentProducts = new List<ProductItemLo>()
+                ContentProducts = new List<ProductItemLo>
                 {
-                    
+                    new ProductItemLo
+                    {
+                        AdContent = new AdContentLo
+                        {
+                            HeadLinePart1 = "Overskrift1",
+                            HeadLinePart2 = "Overskrift2",
+                            Description = "Beksrivelse"
+                        },
+                        FinalUrl = new string[] { "http://nolleren.org/test" }
+                    }
                 }
             };
 
             // Act
+            var result = ExpandedTextAds.CreateTextAds(new AdWordsUser(), adsContent);
+
+            // Assert
+            Assert.AreEqual(adGroup.value[0].id, result.value[0].adGroupId);
+            Assert.AreNotEqual(0, result.value.Length);
 
         }
     }

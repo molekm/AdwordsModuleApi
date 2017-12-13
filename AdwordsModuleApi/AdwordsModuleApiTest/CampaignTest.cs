@@ -117,5 +117,34 @@ namespace AdwordsModuleApiTest
             // Assert
             Assert.AreEqual(3, (int)result.value[0].status);
         }
+
+        [TestMethod]
+        public void CampaignEnded()
+        {
+            // Arrange
+            Campaign campaign = new Campaign
+            {
+                endDate = "20161212"
+            };
+
+            // Act
+            var result = Campaigns.CampaignEnded(campaign);
+
+            // Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void FormatDateString()
+        {
+            // Arrange
+            string date = "20161212";
+
+            // Act
+            var result = Campaigns.FormatDateString(date);
+
+            // Assert
+            Assert.AreEqual("12/12/2016", result);
+        }
     }
 }
