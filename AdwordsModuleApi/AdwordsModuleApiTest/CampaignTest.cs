@@ -36,7 +36,7 @@ namespace AdwordsModuleApiTest
             // Assert
             Assert.AreEqual(DateTime.Now.ToString("yyyyMMdd"), campaign.value[0].startDate);
             Assert.AreEqual(DateTime.Now.AddYears(1).ToString("yyyyMMdd"), campaign.value[0].endDate);
-            Assert.AreEqual(2, (int)campaign.value[0].status);
+            Assert.AreEqual(1, (int)campaign.value[0].status);
             Assert.AreEqual(true, campaign.value[0].networkSetting.targetGoogleSearch);
             Assert.AreEqual(false, campaign.value[0].networkSetting.targetPartnerSearchNetwork);
 
@@ -71,16 +71,51 @@ namespace AdwordsModuleApiTest
         public void GetCampaignsTest()
         {
             // Arrange
-            List<Campaign> campaigns = Campaigns.GetCampaigns(new AdWordsUser());
+            CampaignLo campaignDto = new CampaignLo
+            {
+                Name = DateTime.Now.ToString(),
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddYears(1),
+                Budget = new BudgetLo
+                {
+                    Name = DateTime.Now.ToString(),
+                    MicroAmount = 5000000
+                }
+            };
+
 
             // Act
-
-            
-            Campaign[] camp = campaigns.Where(campa => campa.name == "Test kampagne").ToArray();
+            var campaign = Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
+            List<Campaign> campaigns = Campaigns.GetCampaigns(new AdWordsUser());
+            Campaign[] camp = campaigns.Where(campa => campa.name == campaignDto.Name).ToArray();
 
             // Assert
             Assert.AreNotEqual(0, campaigns.Count);
-            Assert.AreEqual(980217086, camp[0].id);
+            Assert.AreEqual(campaign.value[0].id, camp[0].id);
+        }
+
+        [TestMethod]
+        public void SetCampaignStatusTest()
+        {
+            // Arrange
+            CampaignLo campaignDto = new CampaignLo
+            {
+                Name = DateTime.Now.ToString(),
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddYears(1),
+                Budget = new BudgetLo
+                {
+                    Name = DateTime.Now.ToString(),
+                    MicroAmount = 5000000
+                }
+            };
+
+            // Act
+            var campaign = Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
+            var result = Campaigns.SetCampaignStatus(new AdWordsUser(), campaign.value[0].id, CampaignStatus.REMOVED);
+
+            // Assert
+            Assert.AreEqual(3, (int)result.value[0].status);
         }
     }
 }

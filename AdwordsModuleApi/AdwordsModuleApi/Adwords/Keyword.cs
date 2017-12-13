@@ -13,9 +13,9 @@ using ParallelDots;
 
 namespace AdwordsModuleApi.Adwords
 {
-    public class AdwordsKeyword
+    public class AdWordsKeyword
     {
-        public static AdGroupCriterionReturnValue AdKeyWordsToAdGroup(AdWordsUser user, long adGroupId, string[] keyWords)
+        public static AdGroupCriterionReturnValue AddKeyWordsToAdGroup(AdWordsUser user, long adGroupId, string keyWords)
         {
             using (AdGroupCriterionService adGroupCriterionService =
                 (AdGroupCriterionService)user.GetService(
@@ -24,7 +24,9 @@ namespace AdwordsModuleApi.Adwords
                 AdGroupCriterionReturnValue retVal = new AdGroupCriterionReturnValue();
                 List<AdGroupCriterionOperation> operations = new List<AdGroupCriterionOperation>();
 
-                foreach (string keywordText in keyWords)
+                string[] keyWordsArray = keyWords.Split(',');
+
+                foreach (string keywordText in keyWordsArray)
                 {
                     // Create the keyword.
                     Keyword keyword = new Keyword();

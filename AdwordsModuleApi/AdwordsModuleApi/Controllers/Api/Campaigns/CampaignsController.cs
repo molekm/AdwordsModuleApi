@@ -35,7 +35,6 @@ namespace AdwordsModuleApi.Controllers.Api.Campaigns
         [HttpDelete]
         public IHttpActionResult DeleteCampaign(int id)
         {
-            int test = id;
             CampaignReturnValue camp = Adwords.Campaigns.SetCampaignStatus(new AdWordsUser(), id, CampaignStatus.REMOVED);
 
             return Ok(camp);

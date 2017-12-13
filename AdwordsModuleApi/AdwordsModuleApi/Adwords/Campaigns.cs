@@ -31,7 +31,7 @@ namespace AdwordsModuleApi.Adwords
                     // Recommendation: Set the campaign to PAUSED when creating it to prevent
                     // the ads from immediately serving. Set to ENABLED once you've added
                     // targeting and the ads are ready to serve.
-                    campaign.status = CampaignStatus.PAUSED;
+                    campaign.status = CampaignStatus.ENABLED;
 
                     BiddingStrategyConfiguration biddingConfig = new BiddingStrategyConfiguration();
                     biddingConfig.biddingStrategyType = BiddingStrategyType.MANUAL_CPC;
@@ -121,10 +121,12 @@ namespace AdwordsModuleApi.Adwords
                         {
                             foreach (Campaign campaign in page.entries)
                             {
-                                if (campaign.status != CampaignStatus.REMOVED)
+                                if (campaign.status == CampaignStatus.ENABLED && CampaignEnded(campaign))
+                                {
                                     campaign.startDate = FormatDateString(campaign.startDate);
                                     campaign.endDate = FormatDateString(campaign.endDate);
                                     campaigns.Add(campaign);
+                                }                                   
                             }
                         }
                 }
@@ -136,6 +138,19 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
+        static bool CampaignEnded(Campaign campaign)
+        {
+            var endDate = FormatDateString(campaign.endDate);
+            var date = Convert.ToDateTime(endDate);
+
+            TimeSpan ts = new TimeSpan();
+            DateTime dateNow = DateTime.Now;
+
+            ts = date.Subtract(dateNow);
+
+            return ts.TotalMinutes > 0;
+        }
+
         static string FormatDateString(string datestring)
         {
             string year = datestring.Substring(0, 4);
@@ -143,15 +158,6 @@ namespace AdwordsModuleApi.Adwords
             string day = datestring.Substring(6, 2);
 
             return $"{day}/{month}/{year}";
-        }
-        // Slettes hvis den ikke er nødvendig
-        private static long Round(long amount)
-        {
-            decimal result = amount;
-
-            result = Math.Round(result / 1000000);
-
-            return (long)result * 1000000;
         }
 
         public static CampaignReturnValue SetCampaignStatus(AdWordsUser user, long campaignId, CampaignStatus campaignStatus)

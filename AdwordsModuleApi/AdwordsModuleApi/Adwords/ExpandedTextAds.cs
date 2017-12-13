@@ -30,11 +30,11 @@ namespace AdwordsModuleApi.Adwords
                     expandedTextAd.finalUrls = adWordsContent.ContentProducts[i].FinalUrl;
 
                     AdGroupAd expandedTextAdGroupAd = new AdGroupAd();
-                    expandedTextAdGroupAd.adGroupId = adWordsContent.AdGroupLo.adGroupId;
+                    expandedTextAdGroupAd.adGroupId = adWordsContent.AdGroupLo.AdGroupId;
                     expandedTextAdGroupAd.ad = expandedTextAd;
 
                     // Optional: Set the status.
-                    expandedTextAdGroupAd.status = AdGroupAdStatus.PAUSED;
+                    expandedTextAdGroupAd.status = AdGroupAdStatus.ENABLED;
 
                     // Create the operation.
                     AdGroupAdOperation operation = new AdGroupAdOperation();

@@ -20,9 +20,7 @@ namespace AdwordsModuleApi.Controllers.Api.AdGroups
         {
             var retVal = Adwords.AdGroupAdwords.CreateAdGroup(new AdWordsUser(), adGroupLo);
 
-            string[] keyWords = adGroupLo.KeyWords.Split(',');
-
-            Adwords.AdwordsKeyword.AdKeyWordsToAdGroup(new AdWordsUser(), retVal.value[0].id, keyWords);
+            Adwords.AdWordsKeyword.AddKeyWordsToAdGroup(new AdWordsUser(), retVal.value[0].id, adGroupLo.KeyWords);
 
             return Ok(retVal);
         }
