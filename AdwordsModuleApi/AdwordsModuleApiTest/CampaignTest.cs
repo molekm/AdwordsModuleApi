@@ -122,29 +122,39 @@ namespace AdwordsModuleApiTest
         public void CampaignEnded()
         {
             // Arrange
-            Campaign campaign = new Campaign
+            Campaign campaignOne = new Campaign
             {
                 endDate = "20161212"
             };
 
+            Campaign campaignTwo = new Campaign
+            {
+                endDate = "20181212"
+            };
+
             // Act
-            var result = Campaigns.CampaignEnded(campaign);
+            var resultOne = Campaigns.CampaignEnded(campaignOne);
+            var resultTwo = Campaigns.CampaignEnded(campaignTwo);
 
             // Assert
-            Assert.AreEqual(false, result);
+            Assert.AreEqual(false, resultOne);
+            Assert.AreEqual(true, resultTwo);
         }
 
         [TestMethod]
         public void FormatDateString()
         {
             // Arrange
-            string date = "20161212";
+            string dateOne = "20181008";
+            string dateTwo = "20161212";
 
             // Act
-            var result = Campaigns.FormatDateString(date);
+            var resultOne = Campaigns.FormatDateString(dateOne);
+            var resultTwo = Campaigns.FormatDateString(dateTwo);
 
             // Assert
-            Assert.AreEqual("12/12/2016", result);
+            Assert.AreEqual("08/10/2018", resultOne);
+            Assert.AreEqual("12/12/2016", resultTwo);
         }
     }
 }
