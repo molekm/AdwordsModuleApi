@@ -121,7 +121,7 @@ namespace AdwordsModuleApi.Adwords
                         {
                             foreach (Campaign campaign in page.entries)
                             {
-                                if (campaign.status == CampaignStatus.ENABLED)
+                                if (campaign.status == CampaignStatus.ENABLED && CampaignEnded(campaign))
                                 {
                                     campaign.startDate = FormatDateString(campaign.startDate);
                                     campaign.endDate = FormatDateString(campaign.endDate);
@@ -140,15 +140,16 @@ namespace AdwordsModuleApi.Adwords
 
         public static bool CampaignEnded(Campaign campaign)
         {
-            var endDate = FormatDateString(campaign.endDate);
-            var date = Convert.ToDateTime(endDate);
+            //var endDate = FormatDateString(campaign.endDate);
+            //var date = Convert.ToDateTime(endDate);
 
-            TimeSpan ts = new TimeSpan();
-            DateTime dateNow = DateTime.Now;
+            //TimeSpan ts = new TimeSpan();
+            //DateTime dateNow = DateTime.Now;
 
-            ts = date.Subtract(dateNow);
+            //ts = date.Subtract(dateNow);
 
-            return ts.TotalMinutes > 0;
+            //return ts.TotalMinutes > 0;
+            return true;
         }
 
         public static string FormatDateString(string datestring)
