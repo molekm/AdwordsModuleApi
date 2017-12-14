@@ -56,10 +56,12 @@ namespace AdwordsModuleApi.Adwords
                     campaign.settings = new Setting[] { geoSetting };
 
                     // Optional: Set the start date.
+                    if(Debugger.IsAttached)
                     campaignDto.StartDate = campaignDto.StartDate.AddHours(6);
                     campaign.startDate = campaignDto.StartDate.ToString("yyyyMMdd");
 
                     // Optional: Set the end date.
+                    if(Debugger.IsAttached)
                     campaignDto.EndDate = campaignDto.EndDate.AddHours(6);
                     campaign.endDate = campaignDto.EndDate.ToString("yyyyMMdd");
 
@@ -124,9 +126,9 @@ namespace AdwordsModuleApi.Adwords
                             {
                                 if (campaign.status == CampaignStatus.ENABLED && CampaignEnded(campaign.endDate))
                                 {
-                                    campaign.startDate = FormatDateString(campaign.startDate);
-                                    campaign.endDate = FormatDateString(campaign.endDate);
-                                    campaigns.Add(campaign);
+                                    campaign.startDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.startDate) : FormatDateString(campaign.startDate);
+                                    campaign.endDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.endDate) : FormatDateString(campaign.endDate);
+                                campaigns.Add(campaign);
                                 }                                   
                             }
                         }
@@ -197,5 +199,62 @@ namespace AdwordsModuleApi.Adwords
                 return retVal;
             }
         }
+        public static List<Campaign> GetCampaignsTest(AdWordsUser user)
+        {
+            using (CampaignService campaignService =
+                (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
+            {
+                List<Campaign> campaigns = new List<Campaign>();
+                // Create the selector.
+                Selector selector = new Selector()
+                {
+                    fields = new string[] {
+                        Campaign.Fields.Id,
+                        Campaign.Fields.Name,
+                        Campaign.Fields.Status,
+                        Campaign.Fields.StartDate,
+                        Campaign.Fields.EndDate,
+                        Budget.Fields.Amount
+                    },
+                    paging = Paging.Default
+                };
+
+                CampaignPage page = new CampaignPage();
+
+                try
+                {
+                    // Get the campaigns.
+                    page = campaignService.get(selector);
+
+                    // Display the results.
+                    if (page?.entries != null)
+                    {
+                        foreach (Campaign campaign in page.entries)
+                        {
+                            if (campaign.status == CampaignStatus.ENABLED && CampaignEndedTest(campaign.endDate))
+                            {
+                                campaign.startDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.startDate) : FormatDateString(campaign.startDate);
+                                campaign.endDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.endDate) : FormatDateString(campaign.endDate);
+                                campaigns.Add(campaign);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new System.ApplicationException("Failed to retrieve campaigns", e);
+                }
+                return campaigns;
+            }
+        }
+        public static bool CampaignEndedTest(string endDate)
+        {
+            DateTime date = Convert.ToDateTime(Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
+
+            DateTime dateNow = DateTime.Now;
+
+            return date > dateNow;
+        }
     }
+
 }
