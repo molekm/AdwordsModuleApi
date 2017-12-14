@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using AdwordsModuleApi.Models;
@@ -121,7 +122,7 @@ namespace AdwordsModuleApi.Adwords
                         {
                             foreach (Campaign campaign in page.entries)
                             {
-                                if (campaign.status == CampaignStatus.ENABLED && CampaignEnded(campaign))
+                                if (campaign.status == CampaignStatus.ENABLED && CampaignEnded(campaign.endDate))
                                 {
                                     campaign.startDate = FormatDateString(campaign.startDate);
                                     campaign.endDate = FormatDateString(campaign.endDate);
@@ -138,10 +139,9 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public static bool CampaignEnded(Campaign campaign)
+        public static bool CampaignEnded(string endDate)
         {
-            var endDate = FormatDateString(campaign.endDate);
-            var date = Convert.ToDateTime(endDate);
+            DateTime date = Convert.ToDateTime(!Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
 
             DateTime dateNow = DateTime.Now;
 
@@ -155,6 +155,15 @@ namespace AdwordsModuleApi.Adwords
             string day = datestring.Substring(6, 2);
 
             return $"{day}/{month}/{year}";
+        }
+
+        public static string FormatDateStringUs(string datestring)
+        {
+            string year = datestring.Substring(0, 4);
+            string month = datestring.Substring(4, 2);
+            string day = datestring.Substring(6, 2);
+
+            return $"{month}/{day}/{year}";
         }
 
         public static CampaignReturnValue SetCampaignStatus(AdWordsUser user, long campaignId, CampaignStatus campaignStatus)
