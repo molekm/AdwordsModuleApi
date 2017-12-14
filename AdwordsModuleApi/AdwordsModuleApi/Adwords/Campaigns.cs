@@ -140,16 +140,12 @@ namespace AdwordsModuleApi.Adwords
 
         public static bool CampaignEnded(Campaign campaign)
         {
-            //var endDate = FormatDateString(campaign.endDate);
-            //var date = Convert.ToDateTime(endDate);
+            var endDate = FormatDateString(campaign.endDate);
+            var date = Convert.ToDateTime(endDate);
 
-            //TimeSpan ts = new TimeSpan();
-            //DateTime dateNow = DateTime.Now;
+            DateTime dateNow = DateTime.Now;
 
-            //ts = date.Subtract(dateNow);
-
-            //return ts.TotalMinutes > 0;
-            return true;
+            return date > dateNow;
         }
 
         public static string FormatDateString(string datestring)
