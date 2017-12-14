@@ -38,6 +38,6 @@ namespace AdwordsModuleApi.Controllers.Api.Campaigns
             CampaignReturnValue camp = Adwords.Campaigns.SetCampaignStatus(new AdWordsUser(), id, CampaignStatus.REMOVED);
 
             return Ok(camp);
-        }
+        } 
     }
 }
