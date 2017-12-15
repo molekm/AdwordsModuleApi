@@ -92,7 +92,7 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public static List<Campaign> GetCampaigns(AdWordsUser user)
+        public static List<Campaign> GetCampaigns(AdWordsUser user, bool isUnitTest)
         {
             using (CampaignService campaignService =
                 (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
@@ -124,7 +124,7 @@ namespace AdwordsModuleApi.Adwords
                         {
                             foreach (Campaign campaign in page.entries)
                             {
-                                if (campaign.status == CampaignStatus.ENABLED && CampaignEnded(campaign.endDate))
+                                if (campaign.status == CampaignStatus.ENABLED && CampaignEnded(campaign.endDate, isUnitTest))
                                 {
                                     campaign.startDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.startDate) : FormatDateString(campaign.startDate);
                                     campaign.endDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.endDate) : FormatDateString(campaign.endDate);
@@ -141,13 +141,16 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public static bool CampaignEnded(string endDate)
+        public static bool CampaignEnded(string endDate, bool isUnitTest)
         {
             DateTime date, dateNow;
 
             try
             {
-                date = Convert.ToDateTime(!Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
+                if(!isUnitTest)
+                    date = Convert.ToDateTime(!Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
+                else
+                    date = Convert.ToDateTime(Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
 
                 dateNow = DateTime.Now;
             }
@@ -222,70 +225,6 @@ namespace AdwordsModuleApi.Adwords
                 }
                 return retVal;
             }
-        }
-        public static List<Campaign> GetCampaignsTest(AdWordsUser user)
-        {
-            using (CampaignService campaignService =
-                (CampaignService)user.GetService(AdWordsService.v201710.CampaignService))
-            {
-                List<Campaign> campaigns = new List<Campaign>();
-                // Create the selector.
-                Selector selector = new Selector()
-                {
-                    fields = new string[] {
-                        Campaign.Fields.Id,
-                        Campaign.Fields.Name,
-                        Campaign.Fields.Status,
-                        Campaign.Fields.StartDate,
-                        Campaign.Fields.EndDate,
-                        Budget.Fields.Amount
-                    },
-                    paging = Paging.Default
-                };
-
-                CampaignPage page = new CampaignPage();
-
-                try
-                {
-                    // Get the campaigns.
-                    page = campaignService.get(selector);
-
-                    // Display the results.
-                    if (page?.entries != null)
-                    {
-                        foreach (Campaign campaign in page.entries)
-                        {
-                            if (campaign.status == CampaignStatus.ENABLED && CampaignEndedTest(campaign.endDate))
-                            {
-                                campaign.startDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.startDate) : FormatDateString(campaign.startDate);
-                                campaign.endDate = !Debugger.IsAttached ? FormatDateStringUs(campaign.endDate) : FormatDateString(campaign.endDate);
-                                campaigns.Add(campaign);
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new System.ApplicationException("Failed to retrieve campaigns", e);
-                }
-                return campaigns;
-            }
-        }
-        public static bool CampaignEndedTest(string endDate)
-        {
-            DateTime date, dateNow;
-
-            try
-            {
-               date = Convert.ToDateTime(Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
-
-               dateNow = DateTime.Now;
-            }
-            catch (Exception e)
-            {
-                throw new System.ApplicationException("Failed to retrieve dates", e);
-            }
-            return date > dateNow;
         }
     }
 

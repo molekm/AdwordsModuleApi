@@ -26,7 +26,7 @@ namespace AdwordsModuleApi.Controllers.Api.Campaigns
         [HttpGet]
         public IHttpActionResult GetCampaigns()
         {
-            List<Campaign> campaigns = Adwords.Campaigns.GetCampaigns(new AdWordsUser());
+            List<Campaign> campaigns = Adwords.Campaigns.GetCampaigns(new AdWordsUser(), false);
 
             return Ok(campaigns);
         }

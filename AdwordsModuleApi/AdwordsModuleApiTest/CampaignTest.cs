@@ -86,7 +86,7 @@ namespace AdwordsModuleApiTest
 
             // Act
             var campaign = Campaigns.CreateCampaign(new AdWordsUser(), campaignDto);
-            List<Campaign> campaigns = Campaigns.GetCampaignsTest(new AdWordsUser());
+            List<Campaign> campaigns = Campaigns.GetCampaigns(new AdWordsUser(), true);
             Campaign[] camp = campaigns.Where(campa => campa.name == campaignDto.Name).ToArray();
 
             // Assert
@@ -133,8 +133,8 @@ namespace AdwordsModuleApiTest
             };
 
             // Act
-            var resultOne = Campaigns.CampaignEnded(campaignOne.endDate);
-            var resultTwo = Campaigns.CampaignEnded(campaignTwo.endDate);
+            var resultOne = Campaigns.CampaignEnded(campaignOne.endDate, true);
+            var resultTwo = Campaigns.CampaignEnded(campaignTwo.endDate, true);
 
             // Assert
             Assert.AreEqual(false, resultOne);
