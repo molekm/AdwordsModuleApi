@@ -41,14 +41,6 @@ namespace AdwordsModuleApi.Adwords
                     // Optional: Set the user status.
                     keywordCriterion.userStatus = UserStatus.ENABLED;
 
-                    // Optional: Set the keyword destination url.
-                    //keywordCriterion.finalUrls = new UrlList()
-                    //{
-                    //    urls = new string[] {
-                    //    "http://example.com/mars/cruise/?kw=" + HttpUtility.UrlEncode(keywordText)
-                    //}
-                    //};
-
                     // Create the operations.
                     AdGroupCriterionOperation operation = new AdGroupCriterionOperation();
                     operation.@operator = Operator.ADD;

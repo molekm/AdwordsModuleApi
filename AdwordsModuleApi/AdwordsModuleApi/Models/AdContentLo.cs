@@ -5,7 +5,15 @@ using System.Web;
 
 namespace AdwordsModuleApi.Models
 {
-    public class AdContentLo
+    interface IAdContentLo
+    {
+        string HeadLinePart1 { get; set; }
+        string HeadLinePart2 { get; set; }
+        string Path1 { get; set; }
+        string Path2 { get; set; }
+        string Description { get; set; }
+    }
+    public class AdContentLo : IAdContentLo
     {
         public string HeadLinePart1 { get; set; }
         public string HeadLinePart2 { get; set; }

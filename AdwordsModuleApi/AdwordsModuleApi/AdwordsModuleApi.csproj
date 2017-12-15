@@ -211,7 +211,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdContentLo.cs" />
     <Compile Include="Models\AdGroupLo.cs" />
-    <Compile Include="Models\CampaignItemLo.cs" />
     <Compile Include="Models\KeyValuePairLo.cs" />
     <Compile Include="Models\ProductGroupLo.cs" />
     <Compile Include="Models\AdWordsContentLo.cs" />

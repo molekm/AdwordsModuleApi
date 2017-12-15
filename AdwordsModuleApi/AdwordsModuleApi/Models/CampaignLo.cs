@@ -5,7 +5,14 @@ using System.Web;
 
 namespace AdwordsModuleApi.Models
 {
-    public class CampaignLo
+    interface ICampaignLo
+    {
+        string Name { get; set; }
+        DateTime StartDate { get; set; }
+        DateTime EndDate { get; set; }
+        BudgetLo Budget { get; set; }
+    }
+    public class CampaignLo : ICampaignLo
     {
         public CampaignLo()
         {

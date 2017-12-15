@@ -5,7 +5,13 @@ using System.Web;
 
 namespace AdwordsModuleApi.Models
 {
-    public class ProductItemLo
+    interface IProductItemLo
+    {
+        AdContentLo AdContent { get; set; }
+        int Id { get; set; }
+        string[] FinalUrl { get; set; }
+    }
+    public class ProductItemLo : IProductItemLo
     {
         public AdContentLo AdContent { get; set; }
         public int Id { get; set; }

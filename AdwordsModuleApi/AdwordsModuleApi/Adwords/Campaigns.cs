@@ -143,28 +143,52 @@ namespace AdwordsModuleApi.Adwords
 
         public static bool CampaignEnded(string endDate)
         {
-            DateTime date = Convert.ToDateTime(!Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
+            DateTime date, dateNow;
 
-            DateTime dateNow = DateTime.Now;
+            try
+            {
+                date = Convert.ToDateTime(!Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
 
+                dateNow = DateTime.Now;
+            }
+            catch (Exception e)
+            {
+                throw new System.ApplicationException("Failed to retrieve dates", e);
+            }
             return date > dateNow;
         }
 
         public static string FormatDateString(string datestring)
         {
-            string year = datestring.Substring(0, 4);
-            string month = datestring.Substring(4, 2);
-            string day = datestring.Substring(6, 2);
+            string year, month, day;
 
+            try
+            {
+                year = datestring.Substring(0, 4);
+                month = datestring.Substring(4, 2);
+                day = datestring.Substring(6, 2);
+            }
+            catch (Exception e)
+            {
+                throw new System.ApplicationException("Failed to format date string", e);
+            }
             return $"{day}/{month}/{year}";
         }
 
         public static string FormatDateStringUs(string datestring)
         {
-            string year = datestring.Substring(0, 4);
-            string month = datestring.Substring(4, 2);
-            string day = datestring.Substring(6, 2);
+            string year, month, day;
 
+            try
+            {
+                year = datestring.Substring(0, 4);
+                month = datestring.Substring(4, 2);
+                day = datestring.Substring(6, 2);
+            }
+            catch (Exception e)
+            {
+                throw new System.ApplicationException("Failed to format date string", e);
+            }
             return $"{month}/{day}/{year}";
         }
 
@@ -249,10 +273,18 @@ namespace AdwordsModuleApi.Adwords
         }
         public static bool CampaignEndedTest(string endDate)
         {
-            DateTime date = Convert.ToDateTime(Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
+            DateTime date, dateNow;
 
-            DateTime dateNow = DateTime.Now;
+            try
+            {
+               date = Convert.ToDateTime(Debugger.IsAttached ? FormatDateStringUs(endDate) : FormatDateString(endDate));
 
+               dateNow = DateTime.Now;
+            }
+            catch (Exception e)
+            {
+                throw new System.ApplicationException("Failed to retrieve dates", e);
+            }
             return date > dateNow;
         }
     }
