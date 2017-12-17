@@ -25,11 +25,11 @@ namespace AdwordsModuleApi.Controllers.Api.AdGroups
             return Ok(retVal);
         }
 
-        [Route("api/adgroups/{id:long}")]
+        [Route("api/adgroups/{id:long}/{getAllAdGroups:bool}")]
         [HttpGet]
-        public IHttpActionResult GetAdGroups(long id)
+        public IHttpActionResult GetAdGroups(long id, bool getAllAdGroups)
         {
-            var adGroups = Adwords.AdGroupAdwords.GetAdGroups(new AdWordsUser(), id);
+            var adGroups = Adwords.AdGroupAdwords.GetAdGroups(new AdWordsUser(), id, getAllAdGroups);
 
             return Ok(adGroups);
         }

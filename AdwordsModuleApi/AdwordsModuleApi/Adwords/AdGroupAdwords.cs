@@ -87,7 +87,7 @@ namespace AdwordsModuleApi.Adwords
             }
         }
 
-        public static List<AdGroup> GetAdGroups(AdWordsUser user, long campaignId)
+        public static List<AdGroup> GetAdGroups(AdWordsUser user, long campaignId, bool getAllAdGroups)
         {
             using (AdGroupService adGroupService =
                 (AdGroupService)user.GetService(AdWordsService.v201710.AdGroupService))
@@ -117,10 +117,18 @@ namespace AdwordsModuleApi.Adwords
                     {
                         foreach (AdGroup item in page.entries)
                         {
-                            if (item.status == AdGroupStatus.PAUSED)
+                            if (!getAllAdGroups)
+                            {
+                                if (item.status == AdGroupStatus.PAUSED)
+                                {
+                                    result.Add(item);
+                                }
+                            }
+                            else
                             {
                                 result.Add(item);
                             }
+                           
                         }
                     }
                     
